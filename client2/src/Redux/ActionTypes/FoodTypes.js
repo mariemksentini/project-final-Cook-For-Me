@@ -1,0 +1,7 @@
+export const ADDFOOD = "ADDFOOD"
+
+export const GETALLFOOD = "GETALLFOOD"
+export const FETCHFOODS = "FETCHFOODS"
+
+export const GETONEFOOD = "GETONEFOOD"
+export const DELETEONEFOOD = "DELETEONEFOOD"

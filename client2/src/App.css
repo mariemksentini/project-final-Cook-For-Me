@@ -1,0 +1,31 @@
+.homeBtnn {
+    width: 250px;
+    height: 45px;
+    text-align: center;
+    border-radius: 0px;
+    border: 1px solid white;
+    color: aliceblue;
+}
+
+.homeBtnn:hover {
+    color: #0E7490;
+    background-color: aliceblue;
+}
+
+body {
+    background-color: rgb(249, 249, 249);
+}
+
+.ticker-container {
+    overflow: hidden;
+    padding: 12px;
+    background: linear-gradient(to right, #085c55, #22c55e); /* Teal-600 → Green-500 */
+    white-space: nowrap;
+}
+
+.ticker-text {
+    display: inline-block;
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: white;
+}
