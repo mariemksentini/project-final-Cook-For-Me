@@ -100,43 +100,85 @@
 
 // export default CardCommandeAsChef;
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { updateCommandeStatus } from "../../Redux/Actions/CommandeActions";
 import { Button, Table } from "flowbite-react";
+import { editOneFood } from "../../Redux/Actions/FoodActions";
+import { useNavigate } from "react-router-dom";
+import { current } from "../../Redux/Actions/AuthActions";
 
 const TableRowCommandeAsChef = ({ commande }) => {
     const dispatch = useDispatch();
+    const navigate = useNavigate()
+    const token = localStorage.getItem('token')
     const [status, setStatus] = useState(commande.status);
-
+    useEffect(()=>{
+        if (token) dispatch(current())
+    }, [])
     const handleStatusUpdate = async (e, newStatus) => {
         e.preventDefault();
         try {
+            // Mettre à jour le statut de la commande
             await dispatch(updateCommandeStatus(commande._id, newStatus));
-            setStatus(newStatus);
+            await setStatus(newStatus);
+    
+            if (newStatus === "Accepted") {
+                
+                for (const el of commande.products) {  // ✅ Changer forEach en for...of
+                    console.log("Produit:", el.product.name, "Quantité avant:", el?.product?.quantity, "Quantité commandée:", el.qte);
+
+                    const updatedQuantity = el.product.quantity - el.qte;
+                    if (updatedQuantity >= 0) {
+                        await dispatch(editOneFood(el.product._id, { quantity: updatedQuantity }));
+                        if (updatedQuantity === 0) {
+                            await dispatch(editOneFood(el.product._id, { archived: true }));
+                        }
+                    }
+                }
+            }
+            
         } catch (error) {
             console.error("Error updating status:", error);
         }
     };
 
+    const handleRowClick = () => {
+        navigate(`/CommandeDetails/${commande._id}`);  // ✅ Redirect to details page
+    };
+
     return (
-        <Table.Row className="border-b">
-            <Table.Cell>{commande._id}</Table.Cell>
-            <Table.Cell>{new Date(commande.createdAt).toLocaleString()}</Table.Cell>
-            <Table.Cell>{new Date(commande.updatedAt).toLocaleString()}</Table.Cell>
-            <Table.Cell>{commande.client?.email || "Compte supprimé"}</Table.Cell>
-            <Table.Cell>
+        <Table.Row className="border-b cursor-pointer hover:bg-gray-100" >
+            <Table.Cell onClick={handleRowClick}>{commande._id}</Table.Cell>
+            <Table.Cell onClick={handleRowClick}>{new Date(commande.createdAt).toLocaleString()}</Table.Cell>
+            <Table.Cell onClick={handleRowClick}>{new Date(commande.updatedAt).toLocaleString()}</Table.Cell>
+            <Table.Cell >{commande.client?.email || "Compte supprimé"}</Table.Cell>
+            <Table.Cell>{commande.livreur?.email || "No livreur assigned yet"}</Table.Cell>
+            <Table.Cell onClick={handleRowClick}>
                 <span className={`px-2 py-1 rounded-md text-white ${
                     status === "Accepted" ? "bg-green-500" :
-                    status === "Rejected" ? "bg-red-500" :
+                    status === "Rejected" ? "bg-red-600" :
                     "bg-gray-500"
                 }`}>
                     {status}
                 </span>
             </Table.Cell>
-            <Table.Cell>{commande?.delivered ? "Yes" : "No"}</Table.Cell>
             <Table.Cell>
-                {status === "In progress" && (
+                <span className={`px-2 py-1 rounded-md text-white ${
+                    commande.delivered  ? "bg-green-500" : "bg-red-600" 
+                }`}>
+                    {commande.delivered ? "Oui" : "Non"}
+                </span>
+            </Table.Cell>
+            <Table.Cell>
+                <span className={`px-2 py-1 rounded-md text-white ${
+                    commande.confirmed  ? "bg-green-500" : "bg-red-600" 
+                }`}>
+                    {commande.confirmed ? "Oui" : "Non"}
+                </span>
+            </Table.Cell>
+            <Table.Cell>
+                {status === "In_progress" ? (
                     <div className="flex gap-2">
                         <Button size="xs" color="success" onClick={(e) => handleStatusUpdate(e, "Accepted")}>
                             Accept
@@ -145,7 +187,10 @@ const TableRowCommandeAsChef = ({ commande }) => {
                             Reject
                         </Button>
                     </div>
-                )}
+                )
+                :
+                <span className="text-gray-500">N/A</span>
+            }
             </Table.Cell>
             
         </Table.Row>

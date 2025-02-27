@@ -31,8 +31,8 @@ exports.GetAllFood = async(req,res)=>{
 
 exports.FetchFoods = async(req, res) => {
     try {
-        const archieved = req.query.archieved === "true"; // Convertir en booléen
-        const foodet = await Food.find({ archieved }).populate("owner");
+        const archived = req.query.archived === "true"; // Convertir en booléen
+        const foodet = await Food.find({ archived }).populate("owner");
 
         const page = parseInt(req.query.page);
         const pageSize = parseInt(req.query.pageSize);
@@ -53,6 +53,33 @@ exports.FetchFoods = async(req, res) => {
         res.status(500).send({errors : [{msg : 'Could not get all the food'}]})
     }
 }
+
+exports.FetchFoodsOwnerID = async(req, res) => {
+    try {
+        const {id} = req.params 
+        const archived = req.query.archived === "true"; // Convertir en booléen
+        const foodet = await Food.find({ owner : id, archived  }).populate("owner");
+
+        const page = parseInt(req.query.page);
+        const pageSize = parseInt(req.query.pageSize);
+        
+        // Calculate the start and end indexes for the requested page
+        const startIndex = (page - 1) * pageSize;
+        const endIndex = page * pageSize;
+        
+        // Slice the products array based on the indexes
+        const paginatedFoods = foodet.slice(startIndex, endIndex);
+        
+        // Calculate the total number of pages
+        const totalPages = Math.ceil(foodet.length / pageSize);
+
+        // Send the paginated products and total pages as the API response
+        res.status(200).send({msg : "these are all the foods", foods: paginatedFoods, totalPages });
+    } catch (error) {
+        res.status(500).send({errors : [{msg : 'Could not get all the food'}]})
+    }
+}
+
 
 
 exports.GetOneFood = async(req,res)=>{

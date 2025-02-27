@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { CHECKUSER, CURRENT, GETALLUSERS, GETONEUSER, LOGIN, LOGOUT, REGISTER } from "../ActionTypes/AuthActionTypes"
+import { CHECKUSER, CURRENT, FETCHUSERS, GETALLUSERS, GETONEUSER, LOGIN, LOGOUT, REGISTER } from "../ActionTypes/AuthActionTypes"
 import { handleError } from './ErrorsActions'
 
 export const Register =(newUser, navigate)=>async(dispatch)=>{
@@ -65,7 +65,19 @@ export const logOut=()=>{
 
 export const modif =(id,updatedUser)=>async(dispatch)=>{
     try {
-        await axios.put(`/api/auth/UpdateUser/${id}`, updatedUser)
+        let updatedDetails = {...updatedUser}
+        if (updatedUser.image && updatedUser.image instanceof File) {
+            const formData = new FormData();
+            formData.append("image", updatedUser.image);
+            const res = await axios.post('https://api.imgbb.com/1/upload?key=5e24b767fba1295361aeff54487db37c', formData)
+            updatedDetails.image = res.data.data.url
+        }
+        
+
+        
+
+
+        await axios.put(`/api/auth/UpdateUser/${id}`, updatedDetails)
         dispatch(current())
         
     } catch (error) {
@@ -127,6 +139,20 @@ export const getAllUsers = ()=>async(dispatch)=>{
         const res = await axios.get('/api/auth/AllUsers')
         dispatch({
             type : GETALLUSERS,
+            payload : res.data
+        })
+    } catch (error) {
+        error.response.data.errors.forEach(element => {
+            dispatch(handleError(element.msg))
+        });
+    }
+}
+
+export const fetchUsers =(page, archived)=>async(dispatch)=>{
+    try {
+        const res = await axios.get(`/api/auth/FetchUsers?page=${page}&pageSize=6&archived=${archived}`)
+        dispatch({
+            type : FETCHUSERS,
             payload : res.data
         })
     } catch (error) {

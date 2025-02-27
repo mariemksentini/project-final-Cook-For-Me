@@ -9,9 +9,9 @@ const foodSchema = new mongoose.Schema({
         type : String,
         default : 'Plat'
     },
-    imageUrl : {
+    image : {
         type : String,
-        default : "expemple.com"
+        default :"/food.jpg"
     },
     biography : {
         type : String
@@ -28,7 +28,7 @@ const foodSchema = new mongoose.Schema({
         type : mongoose.Types.ObjectId,
         ref : 'User'
     },
-    archieved : {
+    archived : {
         type : Boolean,
         default : false
     }

@@ -5,13 +5,18 @@ const userSchema = new mongoose.Schema({
         type : String,
         required : true
     },
-    age : {
-        type : Number,
+    lastName : {
+        type : String,
         required : true
+    },
+    birthdate : {
+        type : String,
+        required : true,
+        default : "1900-01-01"
     },
     address : {
         houseNum : {
-            type : Number
+            type : String
         },
         street : {
             type : String
@@ -20,7 +25,7 @@ const userSchema = new mongoose.Schema({
             type : String
         },
         zipCode : {
-            type : Number
+            type : String
         },
         country : {
             type : String
@@ -44,13 +49,30 @@ const userSchema = new mongoose.Schema({
         default : false
     },
     earnings : {
-        type : Number,
-        default : 0
+        type : [Number],
+        default : []
     },
     rate: {
         type: [Number], // Tableau de nombres
         default: [] // Par défaut, un tableau vide
+    },
+    image : {
+        type : String,
+        default :"/user.png"
+    },
+    addressMap : {
+        latitude : {
+            type : Number,
+            default : 36.777125
+        },
+        longitude : {
+            type : Number,
+            default : 10.177729
+        }
     }
+    
+    
+    
 })
 
 module.exports = mongoose.model('User', userSchema)

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { DELETEONEFOOD, FETCHFOODS, GETALLFOOD, GETONEFOOD } from '../ActionTypes/FoodTypes'
+import { DELETEONEFOOD, FETCHFOODS, FETCHFOODSOWNERID, GETALLFOOD, GETONEFOOD } from '../ActionTypes/FoodTypes'
 import { handleError } from './ErrorsActions'
 
 export const getAllFood = ()=>async(dispatch)=>{
@@ -16,9 +16,9 @@ export const getAllFood = ()=>async(dispatch)=>{
     }
 }
 
-export const fetchFoods =(page, archieved)=>async(dispatch)=>{
+export const fetchFoods =(page, archived)=>async(dispatch)=>{
     try {
-        const res = await axios.get(`/api/food/FetchFoods?page=${page}&pageSize=4&archieved=${archieved}`);
+        const res = await axios.get(`/api/food/FetchFoods?page=${page}&pageSize=8&archived=${archived}`);
 
         dispatch({
             type : FETCHFOODS,
@@ -31,23 +31,59 @@ export const fetchFoods =(page, archieved)=>async(dispatch)=>{
     }
 }
 
-export const addFood =(foodToAdd, navigate)=>async(dispatch)=>{
+export const fetchFoodsOwnerID =(id, page, archived)=>async(dispatch)=>{
     try {
-     
-        await axios.post('/api/food/AddFood', foodToAdd,{
-            headers : {
-                autho : localStorage.getItem('token')
-            }
-        })
+        const res = await axios.get(`/api/food/FetchFoodsOwnerID/${id}?page=${page}&pageSize=8&archived=${archived}`);
 
-        dispatch(getAllFood())
-        navigate('/IndexFoods')
+        dispatch({
+            type : FETCHFOODSOWNERID,
+            payload : res.data
+        })
     } catch (error) {
         error.response.data.errors.forEach(element => {
             dispatch(handleError(element.msg))
         });
     }
 }
+
+
+
+export const addFood = (foodToAdd, navigate, id) => async (dispatch) => {
+    try {
+        if (foodToAdd.image && foodToAdd.image !== "/food.jpg") { 
+            const formData = new FormData();
+            formData.append("image", foodToAdd.image);
+
+            const res = await axios.post(
+                "https://api.imgbb.com/1/upload?key=5e24b767fba1295361aeff54487db37c",
+                formData
+            );
+
+            foodToAdd.image = res.data.data.url; // Use uploaded image URL
+        } else {
+            delete foodToAdd.image; // Remove image field, backend will handle default
+        }
+
+        await axios.post(
+            "/api/food/AddFood",
+            foodToAdd,
+            {
+                headers: {
+                    autho: localStorage.getItem("token"),
+                },
+            }
+        );
+
+        dispatch(getAllFood());
+        navigate(`/FoodOwnerID/${id}`);
+    } catch (error) {
+        error.response?.data?.errors?.forEach((element) => {
+            dispatch(handleError(element.msg));
+        });
+    }
+};
+
+
 
 export const getOneFood =(id)=>async(dispatch)=>{
     try {
@@ -77,14 +113,33 @@ export const deleteOneFood =(id)=>async(dispatch)=>{
     }
 }
 
-export const editOneFood =(id, foodDetails)=>async(dispatch)=>{
+export const editOneFood = (id, foodDetails) => async (dispatch) => {
     try {
-        await axios.put(`/api/food/UpdateOneFood/${id}`,foodDetails )
-        dispatch(getAllFood())
-        
+        let updatedDetails = { ...foodDetails };
+
+        if (foodDetails.image && foodDetails.image instanceof File) {
+            const formData = new FormData();
+            formData.append("image", foodDetails.image);
+
+            const res = await axios.post(
+                "https://api.imgbb.com/1/upload?key=5e24b767fba1295361aeff54487db37c",
+                formData
+            );
+
+            updatedDetails.image = res.data.data.url;
+        }
+
+        await axios.put(`/api/food/UpdateOneFood/${id}`, updatedDetails);
+        dispatch(getAllFood());
     } catch (error) {
-        error.response.data.errors.forEach(element => {
-            dispatch(handleError(element.msg))
-        });
+        if (error.response?.data?.errors) {
+            error.response.data.errors.forEach((element) => {
+                dispatch(handleError(element.msg));
+            });
+        } else {
+            console.error("Error updating food:", error);
+        }
     }
-}
+};
+
+

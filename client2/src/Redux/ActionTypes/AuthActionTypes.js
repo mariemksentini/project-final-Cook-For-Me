@@ -7,6 +7,8 @@ export const DELETEUSER = "DELETEUSER"
 export const CHECKUSER = "CHECKUSER"
 
 export const GETALLUSERS = "GETALLUSERS"
+export const FETCHUSERS = "FETCHUSERS"
+
 export const GETONEUSER = "GETONEUSER"
 export const DELETEONEUSER = "DELETEONEUSER"
 

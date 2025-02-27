@@ -1,51 +1,52 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { getOwnPanier } from "../../Redux/Actions/PanierActions";
-import CardProducts from "./CardProduct";
 import CardChef from "./ParChef/CardChef";
+import { Spinner } from "flowbite-react";
+import { PackageSearch } from "lucide-react"; // Lucide icon
 
 const ListProducts = () => {
     const dispatch = useDispatch();
+    const [loading, setLoading] = useState(true); // Loading state
 
     useEffect(() => {
-        dispatch(getOwnPanier());
+        dispatch(getOwnPanier()).then(() => setLoading(false)); // Stop loading after fetching
     }, []);
 
     const ownPanier = useSelector(state => state.PanierReducer.ownPanier);
-    const c = ownPanier?.products?.map((prod) => prod?.product?.owner?._id);
-    const chefsID = [...new Set(c)]; // Remove duplicate chef IDs
+    const chefsID = [...new Set(ownPanier?.products?.map(prod => prod?.product?.owner?._id))]; // Unique chef IDs
 
     return (
         <>
-            {ownPanier?.products ? (
+            {loading ? (
+                // 🔄 Spinner when loading
+                <div className="flex justify-center items-center h-40">
+                    <p>Chargement...</p>
+                </div>
+            ) : ownPanier?.products?.length ? (
                 <>
-                    {/* Render CardProducts for each product */}
-                    {/* {ownPanier?.products?.map((el) => (
-                        <CardProducts key={el._id} el={el} ownPanier={ownPanier} />
-                    ))} */}
-
-                    {/* Render CardChef for each unique chef */}
                     {chefsID.map((chef) => {
                         const chefProducts = ownPanier.products.filter(
-                            (el) => el.product.owner._id === chef
+                            (el) => el?.product?.owner?._id === chef
                         );
-
-                        // Get the first product to extract chef's name
-                        const firstProduct = chefProducts[0];
 
                         return (
                             <CardChef
                                 key={chef}
                                 chef={chef}
                                 products={chefProducts}
-                                chefName={firstProduct?.product?.owner?.name} // Pass chef's name
+                                chefEmail={chefProducts[0]?.product?.owner?.email}
                                 ownPanier={ownPanier}
                             />
                         );
                     })}
                 </>
             ) : (
-                <h3>No products in panier</h3>
+                // 📦 No products UI
+                <div className="flex flex-col items-center justify-center h-40 text-gray-600">
+                    <PackageSearch size={50} className="mb-2" />
+                    <p>Votre panier est vide.</p>
+                </div>
             )}
         </>
     );

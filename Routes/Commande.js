@@ -2,7 +2,7 @@ const express = require('express');
 const User = require('../Models/User');
 const Commande = require('../Models/Commande');
 const { IsAuth } = require('../Middlewares/IsAuth');
-const { AddCommande, GetCommandesWithChefID, GetCommandesWithClientID, GetOneCommandsWithID, UpdateCommandeStatus, UpdateCommande, GetAllCommandes, DeleteCommande } = require('../Controllers/Commande');
+const { AddCommande, GetCommandesWithChefID, GetCommandesWithClientID, GetOneCommandsWithID, UpdateCommandeStatus, UpdateCommande, GetAllCommandes, DeleteCommande, GetCommandesWithLivreurID } = require('../Controllers/Commande');
 
 const commandeRouter = express.Router();
 
@@ -13,6 +13,8 @@ commandeRouter.post('/AddCommande', AddCommande);
 commandeRouter.get('/GetCommandesWithChefID', IsAuth, GetCommandesWithChefID);
 
 commandeRouter.get('/GetCommandesWithClientID', IsAuth, GetCommandesWithClientID);
+
+commandeRouter.get('/GetCommandesWithLivreurID', IsAuth, GetCommandesWithLivreurID);
 
 commandeRouter.get('/GetOneCommandsWithID/:id', GetOneCommandsWithID);
 

@@ -1,79 +1,77 @@
-import { Button } from 'flowbite-react'; // Import Flowbite Button
-import { Card } from 'flowbite-react'; // Import Flowbite Card
-import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { deleteOneUser } from '../../Redux/Actions/AuthActions';
+import { Button, Dropdown } from "flowbite-react";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { deleteOneUser, fetchUsers } from "../../Redux/Actions/AuthActions";
+import { MoreVertical } from "lucide-react";
 
-const CardUser = ({ user }) => {
+const CardUser = ({ user, currUser, currentPage }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const archived = user.archived;
 
-  const handleDeleteUser = (e, id) => {
-    e.preventDefault();
-    dispatch(deleteOneUser(id, navigate));
+  const handleDeleteUser = async () => {
+    await dispatch(deleteOneUser(user._id, navigate));
+    dispatch(fetchUsers(currentPage, archived));
   };
 
+  const handleNavDetails =()=>{
+    user._id === currUser._id ?
+    navigate('/Profil')
+    : navigate(`/UserDetails/${user._id}`)
+  }
+
+  const bgColor = user._id === currUser._id 
+  ? "bg-purple-100" 
+  : archived 
+    ? "bg-gray-200" 
+    : "bg-white"; 
+
+
   return (
-    
-    <Card className="w-72 bg-white shadow-md rounded-lg">
-      <image
-        src="holder.js/100px180"
-        alt="User Image"
-        className="w-full h-48 object-cover rounded-t-lg"
-      />
-      <div className="space-y-4 p-4">
-        <h3 className="text-lg font-semibold text-gray-800">
-          {user.name}
-        </h3>
-        <h3 className="text-sm text-gray-500">
-          {user.email}
-          <br />
-          {user?.address?.country}
-        </h3>
-        <div className="flex gap-2">
-          <Link to={`/UserDetails/${user._id}`}>
-            <Button  color="failure">
-              View Details
-            </Button>
-          </Link>
-          <Button
-            onClick={(e) => handleDeleteUser(e, user._id)}
-            color="failure"
+    <div
+      className={`relative max-w-xs rounded overflow-hidden shadow-lg cursor-pointer ${bgColor} `}
+      style={{ width: "310px", margin: "10px" }}
+    >
+      <div className="p-4">
+        {/* Profile Image */}
+        <div onClick={()=>handleNavDetails()} className="w-full flex justify-center">
+          <img
+            src={user.image || "/user.png"}
+            alt="User Profile"
+            className=" object-cover "
+            style={{width : "160px", height : "160px", borderRadius : "9999px"}}
+          />
+        </div>
+
+        {/* User Info */}
+        <div className="text-center mt-4">
+          <h3 className="text-lg font-bold text-gray-900">{user.name} {user.lastName}</h3>
+          <p className="text-sm text-gray-500">{user.email}</p>
+          <p className="text-sm text-gray-500">{user?.address?.country}</p>
+          <p className="text-sm text-gray-500">{user?.role}</p>
+        </div>
+
+        {/* Action Icons */}
+        <div className="absolute top-4 right-2">
+          <Dropdown label={<MoreVertical className="w-5 h-5 text-gray-700" />} 
+          arrowIcon={false}
+          inline
           >
-            Delete User
-          </Button>
+            {currUser._id === user._id 
+            ? <Dropdown.Item as={Link} to={`/Profil`}>Profil</Dropdown.Item>
+            : 
+            <Dropdown.Item as={Link} to={user._id === currUser._id ? '/Profil' : `/UserDetails/${user._id}`}>Details</Dropdown.Item>
+
+            }
+            <Dropdown.Item as={Link} to={`/FoodOwnerID/${user._id}`}>Foods</Dropdown.Item>
+
+            {currUser.role === "admin" &&
+              (<Dropdown.Item onClick={() => handleDeleteUser()} className="text-red-600">Delete User</Dropdown.Item>)
+            }
+          </Dropdown>
         </div>
       </div>
-    </Card>
-
-//   <Card href="#" className="max-w-sm">
-//   <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-//     Noteworthy technology acquisitions 2021
-//   </h5>
-  
-//   <p className="font-normal text-gray-700 dark:text-gray-400">
-//     Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.
-//   </p>
-//       <Link to={`/UserDetails/${user._id}`}>
-//         <Button color="blue">
-//           View Details
-//         </Button>
-//       </Link>
-//       <Button
-//         onClick={(e) => handleDeleteUser(e, user._id)}
-//         color="blue"
-//       >
-//         Delete User
-//       </Button>
-// </Card>
-    // <div>
-    //    {user.name}
-    //    <Link to={`/UserDetails/${user._id}`}>
-    //        <Button className="w-full bg-blue-500 hover:bg-blue-600 text-white">
-    //          View Details
-    //        </Button>
-    //      </Link>
-    // </div>
+    </div>
   );
 };
 

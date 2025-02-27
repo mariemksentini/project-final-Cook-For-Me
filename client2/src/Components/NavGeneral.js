@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { current, logOut } from '../Redux/Actions/AuthActions';
 import { Avatar, Button, Dropdown, Navbar } from "flowbite-react";
+import { ChefHat, ClipboardCopy, ClipboardPaste, Inbox, Map, ShoppingCart, Users, UsersRound } from 'lucide-react';
 
 const NavGeneral = () => {
     const dispatch = useDispatch();
@@ -17,8 +18,9 @@ const NavGeneral = () => {
     }, []);
 
     const handleLogOut = async () => {
-        await dispatch(logOut());
         navigate('/');
+        await dispatch(logOut());
+        
     };
 
     // Check if current route is "/"
@@ -43,20 +45,23 @@ const NavGeneral = () => {
 
     const toggleNav = () => setIsNavOpen(prev => !prev); // Function to toggle navbar
 
+    const bgColor = "rgba(255, 255, 255, 0.80)"
+
     return (
         <Navbar 
             fluid
-            className={`fixed border-b-2 border-white top-0 left-0 w-full z-50 transition-all items-center duration-300 ${
+            className={`fixed border-b-2  top-0 left-0 w-full z-50 transition-all items-center duration-300 ${
                 isHomePage
                     ? isScrolled
-                        ? "bg-white shadow-md"
+                        ? `shadow-md`
                         : "bg-transparent"
-                    : "bg-white shadow-md"
+                    : `shadow-md`
             }`}
+            style={{ backgroundColor: isHomePage && !isScrolled ? "transparent" : bgColor , borderColor : bgColor}}
         >
             <Navbar.Brand as={Link} to="/">
                 <img 
-                    src={isHomePage && !isScrolled ? "COOK_FOR_ME_white.png" : "COOK_FOR_ME_green.png"} 
+                    src={isHomePage && !isScrolled ? "/COOK_FOR_ME_white.png" : "/COOK_FOR_ME_green.png"} 
                     alt="Cook For Me Logo"
                     style={{height : "80px"}}
                 />
@@ -76,73 +81,105 @@ const NavGeneral = () => {
                     Home
                 </Navbar.Link>
                 <Navbar.Link as={Link} to="/IndexFoods" className={isHomePage && !isScrolled ? "text-white" : "text-teal-900"}>
-                    Foods
+                    Food
                 </Navbar.Link>
-                <Navbar.Link as={Link} to="/ContactAdmin" className={isHomePage && !isScrolled ? "text-white" : "text-teal-900"}>
-                    Contact Admin
-                </Navbar.Link>
+            
 
-                {(token && user) ? (
+                {(token && user) &&
+                (   user.role === "user" 
+                    ?
                     <>
-                        <Dropdown arrowIcon={false} className={isHomePage && !isScrolled ? "text-white" : "text-teal-900"} inline label={user.name} >
-                            <Dropdown.Header>
-                                <span className="block text-sm">{user.name}</span>
-                                <span className="block truncate text-sm font-medium">{user.email}</span>
-                            </Dropdown.Header>
-                            <Dropdown.Item>
-                                <Navbar.Link as={Link} to="/Profil">Profil</Navbar.Link>
-                            </Dropdown.Item>
-                            <Dropdown.Item>Settings</Dropdown.Item>
-                            <Dropdown.Item>Earnings</Dropdown.Item>
-                            <Dropdown.Divider />
-                            <Dropdown.Item onClick={handleLogOut}>Sign out</Dropdown.Item>
-                        </Dropdown>
-                        <Navbar.Link as={Link} to="/Profil" className={isHomePage && !isScrolled ? "text-white" : "text-teal-900"}>
-                            Profil
+                        
+                        <Navbar.Link as={Link} to="/CommandesAsClient" className={isHomePage && !isScrolled ? "text-white" : "text-teal-900"}>
+                            My Orders
                         </Navbar.Link>
-
-                        {user?.role === 'admin' ? (
-                            <>
-                                <Navbar.Link as={Link} to="/IndexPaniers" className={isHomePage && !isScrolled ? "text-white" : "text-teal-900"}>
-                                    Paniers
-                                </Navbar.Link>
-                                <Navbar.Link as={Link} to="/GetAllUsers" className={isHomePage && !isScrolled ? "text-white" : "text-teal-900"}>
-                                    Users
-                                </Navbar.Link>
-                                <Navbar.Link as={Link} to="/ListRequests" className={isHomePage && !isScrolled ? "text-white" : "text-teal-900"}>
-                                    ReqsAdmin
-                                </Navbar.Link>
-                                <Navbar.Link as={Link} to="/CommandesAdmin" className={isHomePage && !isScrolled ? "text-white" : "text-teal-900"}>
-                                    Comms Admin
-                                </Navbar.Link>
-                            </>
-                        ) : (
-                            <>
-                                <Navbar.Link as={Link} to="/IndexPanier" className={isHomePage && !isScrolled ? "text-white" : "text-teal-900"}>
-                                    Own Panier
-                                </Navbar.Link>
-                                <Navbar.Link as={Link} to="/CommandesAsClient" className={isHomePage && !isScrolled ? "text-white" : "text-teal-900"}>
-                                    Commandes as Client
-                                </Navbar.Link>
-                                <Navbar.Link as={Link} to="/CommandesAsChef" className={isHomePage && !isScrolled ? "text-white" : "text-teal-900"}>
-                                    Commandes as Chef
-                                </Navbar.Link>
-                            </>
-                        )}
-                    </>
-                ) : (
-                    <>
-                        <Navbar.Link as={Link} to="/SignIn" className={isHomePage && !isScrolled ? "text-white" : "text-teal-900"}>
-                            Sign In
+                        <Navbar.Link as={Link} to="/CommandesAsChef" className={isHomePage && !isScrolled ? "text-white" : "text-teal-900"}>
+                            <ChefHat/>
                         </Navbar.Link>
-                        <Navbar.Link as={Link} to="/SignUp" className={isHomePage && !isScrolled ? "text-white" : "text-teal-900"}>
-                            Sign Up
+                        <Navbar.Link title='Users' as={Link} to="/GetAllUsers" className={isHomePage && !isScrolled ? "text-white" : "text-teal-900"}>
+                            <Users/>
+                        </Navbar.Link>
+                        <Navbar.Link as={Link} to="/map" className={isHomePage && !isScrolled ? "text-white" : "text-teal-900"}>
+                            <Map/>
+                        </Navbar.Link>
+                        <Navbar.Link as={Link} to="/IndexPanier" className={isHomePage && !isScrolled ? "text-white" : "text-teal-900"}>
+                            <ShoppingCart/>
                         </Navbar.Link>
                     </>
-                )}
+                    :
+                    user.role === "admin" 
+                    ?
+                    <>
+                        
+                        <Navbar.Link as={Link} to="/CommandesAdmin" className={isHomePage && !isScrolled ? "text-white" : "text-teal-900"}>
+                            Manage Orders
+                        </Navbar.Link>
+                        <Navbar.Link as={Link} to="/ListRequests" className={isHomePage && !isScrolled ? "text-white" : "text-teal-900"}>
+                            <Inbox/>
+                        </Navbar.Link>
+                        <Navbar.Link as={Link} to="/GetAllUsers" className={isHomePage && !isScrolled ? "text-white" : "text-teal-900"}>
+                            <UsersRound/>
+                        </Navbar.Link>
+                        <Navbar.Link as={Link} to="/map" className={isHomePage && !isScrolled ? "text-white" : "text-teal-900"}>
+                            <Map/>
+                        </Navbar.Link>
+                    </>
+                    :
+                    <>
+                        <Navbar.Link as={Link} to="/CommandesAsLivreur" className={isHomePage && !isScrolled ? "text-white" : "text-teal-900"}>
+                            Deliver Orders
+                        </Navbar.Link>
+                        <Navbar.Link as={Link} to="/MapLivreur" className={isHomePage && !isScrolled ? "text-white" : "text-teal-900"}>
+                            <Map/>
+                        </Navbar.Link>
+                    </>
+                )
+                }
+                {(token && user) &&
+                    <Dropdown arrowIcon={false} className={isHomePage && !isScrolled ? "text-white" : "text-teal-900"} inline 
+                    label={<img 
+                        src={user.image} 
+                        alt="Profile" 
+                        className={`w-8 h-8 rounded-full border-2 transition-colors duration-300 ${
+                            isHomePage && !isScrolled ? "border-white" : "border-teal-900"
+                        }`} 
+                        style={{ marginRight: "20px" }} 
+                    />}>
+                        <Dropdown.Header >
+                            <span className="block truncate text-sm font-medium">{user.email}</span>
+                        </Dropdown.Header >
+                        <Dropdown.Item >
+                            <Navbar.Link as={Link} to="/Profil">Profil</Navbar.Link>
+                        </Dropdown.Item>
+                        <Dropdown.Item >Settings</Dropdown.Item>
+                        <Dropdown.Item as={Link} to={user.role === 'admin' ? '/DashboardAdmin' : user.role === 'user' ? '/DashboardUser' : '/'} >
+                            <Navbar.Link as={Link} to={user.role === 'admin' ? '/DashboardAdmin' : user.role === 'user' ? '/DashboardUser' : '/'} >Dashboard</Navbar.Link>
+                        
+                        </Dropdown.Item>
+                        <Dropdown.Divider />
+                        <Dropdown.Item  onClick={handleLogOut} className='text-red-600'>Sign out</Dropdown.Item>
+                    </Dropdown>
+                }
+                {(!token) && 
+                <>
+                <Navbar.Link as={Link} to="/map" className={isHomePage && !isScrolled ? "text-white" : "text-teal-900"}>
+                    Our locations
+                </Navbar.Link>
+                <Navbar.Link as={Link} to="/ContactAdminAsGuest" className={isHomePage && !isScrolled ? "text-white" : "text-teal-900"}>
+                    Contact us
+                </Navbar.Link>
+                <Navbar.Link style={{ border: "1px solid white" , padding : "10px" , marginTop : "-10px"}}  as={Link} to="/SignIn" className={isHomePage && !isScrolled ? "text-white mr-3 navBtnn" : "navBtnn mr-3 text-teal-900"}>
+                    Register / Log in 
+                </Navbar.Link>
+                
+                </>
+                }
+
+
             </Navbar.Collapse>
         </Navbar>
     );
 };
 
 export default NavGeneral;
+//ContactAdminAsGuest

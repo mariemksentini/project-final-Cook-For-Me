@@ -1,6 +1,6 @@
 import axios from "axios";
 import { handleError } from "./ErrorsActions";
-import { ADDCOMMANDE, GETALLCOMMANDES, GETCOMMANDESWITHCHEFID, GETCOMMANDESWITHCLIENTID } from "../ActionTypes/CommandeTypes";
+import { ADDCOMMANDE, GETALLCOMMANDES, GETCOMMANDESWITHCHEFID, GETCOMMANDESWITHCLIENTID, GETCOMMANDESWITHLIVREURID, GETONECOMMANDE } from "../ActionTypes/CommandeTypes";
 
 export const addCommande =(commandeData)=>async(dispatch)=>{
     try {
@@ -59,6 +59,27 @@ export const getCommandesWithClientID = ()=>async(dispatch)=>{
     }
 }
 
+export const getCommandesWithLivreurID = ()=>async(dispatch)=>{
+    try {
+        const config = {
+            headers : {
+                autho : localStorage.getItem('token')
+            }
+        }
+        const res = await axios.get('/api/commande/GetCommandesWithLivreurID', config)
+
+        dispatch({
+            type : GETCOMMANDESWITHLIVREURID,
+            payload : res.data
+        })
+
+    } catch (error) {
+        error.response.data.errors.forEach(element => {
+            dispatch(handleError(element.msg))
+        });
+    }
+}
+
 export const updateCommandeStatus =(id,status)=>async(dispatch)=>{
     try {
         const res = await axios.put(`/api/commande/UpdateCommandeStatus/${id}`, {status})
@@ -96,19 +117,22 @@ export const getAllCommandes =()=>async(dispatch)=>{
     }
 }
 
-export const getOneCommandeWithID =(id)=>async(dispatch)=>{
+
+
+export const getOneCommandeWithID = (id) => async (dispatch) => {
     try {
-        const res = await axios.get(`/api/commande/GetOneCommandsWithID/${id}`)
+        const res = await axios.get(`/api/commande/GetOneCommandsWithID/${id}`);
         dispatch({
-            type : GETALLCOMMANDES,
-            payload : res.data
-        })
+            type: GETONECOMMANDE,  
+            payload: { commande: res.data }
+        });
     } catch (error) {
-        error.response.data.errors.forEach(element => {
-            dispatch(handleError(element.msg))
+        error.response?.data?.errors?.forEach(err => {
+            dispatch(handleError(err.msg));
         });
     }
-}
+};
+
 
 export const updateCommande = (id, updatedData )=>async(dispatch)=>{
     try {

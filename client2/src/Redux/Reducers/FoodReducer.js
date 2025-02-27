@@ -1,4 +1,4 @@
-import { DELETEONEFOOD, FETCHFOODS, GETALLFOOD, GETONEFOOD } from "../ActionTypes/FoodTypes"
+import { DELETEONEFOOD, FETCHFOODS, FETCHFOODSOWNERID, GETALLFOOD, GETONEFOOD } from "../ActionTypes/FoodTypes"
 
 const initialState = {
     foods : [],
@@ -19,6 +19,9 @@ const FoodReducer =(state= initialState, action)=>{
             return {...state, wantedFood : {}}
 
         case FETCHFOODS :
+            return {...state, foodet : action.payload.foods, totalPages : action.payload.totalPages}
+
+        case FETCHFOODSOWNERID :
             return {...state, foodet : action.payload.foods, totalPages : action.payload.totalPages}
         default: return state
     }

@@ -33,6 +33,7 @@ exports.GetCommandesWithChefID = async (req, res) => {
         const commandes = await Commande.find({ chef: req.user._id })
             .populate('client')
             .populate('chef')
+            .populate('livreur')
             .populate({
                 path: 'products.product',
                 model: 'Food'
@@ -54,6 +55,7 @@ exports.GetCommandesWithClientID = async (req, res) => {
         const commandes = await Commande.find({ client: req.user._id })
             .populate('chef')
             .populate('client')
+            .populate('livreur')
             .populate({
                 path: 'products.product',
                 model: 'Food'
@@ -70,12 +72,36 @@ exports.GetCommandesWithClientID = async (req, res) => {
     }
 }
 
+
+exports.GetCommandesWithLivreurID = async (req, res) => {
+    try {
+        const commandes = await Commande.find({ livreur: req.user._id })
+            .populate('client')
+            .populate('chef')
+            .populate('livreur')
+            .populate({
+                path: 'products.product',
+                model: 'Food'
+            });
+
+        if (commandes.length === 0) {
+            return res.status(400).send({ errors: [{ msg: 'You don’t have any commandes at the moment' }] });
+        }
+
+        res.status(200).send({ msg: 'These are your commandes', commandes });
+    } catch (error) {
+        
+        res.status(500).send({ errors: [{ msg: 'Could not get commande ya livreur' }] });
+    }
+}
+
 exports.GetOneCommandsWithID = async (req, res) => {
     try {
         const {id} = req.params
         const commande = await Commande.findById(id)
             .populate('chef')
             .populate('client')
+            .populate('livreur')
             .populate({
                 path: 'products.product',
                 model: 'Food'
@@ -90,6 +116,7 @@ exports.GetOneCommandsWithID = async (req, res) => {
         res.status(500).send({ errors: [{ msg: 'Could not get commande ya admin' }] });
     }
 }
+
 
 exports.UpdateCommandeStatus = async (req, res) => {
     try {
@@ -148,6 +175,7 @@ exports.GetAllCommandes = async (req, res) => {
         const commandes = await Commande.find()
             .populate('chef')
             .populate('client')
+            .populate('livreur')
             .populate({
                 path: 'products.product',
                 model: 'Food'

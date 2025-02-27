@@ -1,10 +1,12 @@
-import { CHECKUSER, CURRENT, GETALLUSERS, GETONEUSER, LOGIN, LOGOUT, REGISTER } from "../ActionTypes/AuthActionTypes"
+import { CHECKUSER, CURRENT, FETCHUSERS, GETALLUSERS, GETONEUSER, LOGIN, LOGOUT, REGISTER } from "../ActionTypes/AuthActionTypes"
 
 const initialState = {
     user : {},
     checked : false,
     users : [],
-    wantedUser : {}
+    wantedUser : {},
+    useret : [],
+    totalPages : 0
 }
 
 const AuthReducer =(state = initialState, action)=>{
@@ -30,6 +32,9 @@ const AuthReducer =(state = initialState, action)=>{
 
         case GETALLUSERS : 
             return {...state, users : action.payload.users}
+
+        case FETCHUSERS :
+            return {...state, useret : action.payload.users, totalPages : action.payload.totalPages}
         
         case GETONEUSER : 
             return {...state, wantedUser : action.payload.user}

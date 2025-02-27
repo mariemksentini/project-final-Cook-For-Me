@@ -4,7 +4,6 @@ import SearchItemPanier from "./SearchItemPanier"
 const IndexPanier =()=>{
     return (
         <>
-            <SearchItemPanier/>
             <ListProducts/>
             
         </>

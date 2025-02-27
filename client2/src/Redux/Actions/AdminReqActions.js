@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GETALLREQUESTS, SENDREQUESTTOADMIN } from "../ActionTypes/AdminReqTypes";
+import { ADDADMINREQ, GETALLREQUESTS, SENDREQUESTTOADMIN } from "../ActionTypes/AdminReqTypes";
 import { handleError } from "./ErrorsActions";
 
 export const GetAllRequests = ()=>async(dispatch)=>{
@@ -9,6 +9,21 @@ export const GetAllRequests = ()=>async(dispatch)=>{
             type : GETALLREQUESTS,
             payload : res.data
         })
+    } catch (error) {
+        error.response.data.errors.forEach(element => {
+            dispatch(handleError(element.msg))
+        });
+    }
+}
+
+export const AddAdminReq =(reqToSend, navigate)=>async(dispatch)=>{
+    try {
+        const res = await axios.post('/api/adminReq/AddAdminReq', reqToSend)
+        dispatch({
+            type : ADDADMINREQ,
+            payload : res.data
+        })
+        navigate('/')
     } catch (error) {
         error.response.data.errors.forEach(element => {
             dispatch(handleError(element.msg))

@@ -1,12 +1,54 @@
 import { Button } from "flowbite-react";
 import { useEffect, useState, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Footerr from "./Footerr";
 
 const Home = () => {
     const token = localStorage.getItem("token")
     const [left, setLeft] = useState(0);
     const tickerRef = useRef(null);
     const containerRef = useRef(null);
+    const navigate = useNavigate()
+
+    const foods = [
+        { 
+            id: 1, 
+            price: "5dt", 
+            description: "A crispy, wood-fired pizza topped with rich tomato sauce, melted mozzarella, and fresh basil.", 
+            Stock: "7 pizzas", 
+            name: "Pizza", 
+            chef: "Mariem Ksentini", 
+            chefImage: "/person-home-1.jpg" 
+        },
+        { 
+            id: 2, 
+            price: "10dt", 
+            description: "A juicy, flame-grilled beef patty stacked with fresh lettuce, tomatoes, and a toasted bun.", 
+            Stock: "7 pieces", 
+            name: "Burger",  
+            chef: "Mahmoud Zaouchi", 
+            chefImage: "/person-home-4.jpg" 
+        },
+        { 
+            id: 3, 
+            price: "9dt", 
+            description: "Al dente pasta tossed in a creamy sauce with garlic, parmesan, and fresh herbs.", 
+            Stock: "9 plats", 
+            name: "Pasta",  
+            chef: "Nader Ksentini", 
+            chefImage: "/person-home-3.jpg" 
+        },
+        { 
+            id: 4, 
+            price: "28dt", 
+            description: "A delicate selection of fresh sushi rolls, crafted with premium seafood and Japanese flavors.", 
+            Stock: "8 boxes", 
+            name: "Sushi",  
+            chef: "Malek Chatty", 
+            chefImage: "/person-home-2.jpg" 
+        }
+    ];
+    
 
     const foodNames = [
         "Pizza 🍕", "Sushi 🍣", "Tacos 🌮", "Pasta 🍝", "Burgers 🍔", 
@@ -39,6 +81,11 @@ const Home = () => {
 
         tick();
     }, []);
+    
+
+   
+    
+
     return (
         <>
         <div className="relative w-full h-[500px]">
@@ -58,7 +105,7 @@ const Home = () => {
             
             {/* Contenu au-dessus de la vidéo */}
             <div className="absolute top-0 left-0 w-full h-full flex flex-col items-center justify-center text-white bg-black bg-opacity-50 text-center px-4">
-                <h1 style={{ fontSize: "5rem", fontWeight: "bold", lineHeight: "1.2", fontFamily : "Verdana" }}>
+                <h1 className="headHome" >
                     Where Homemade Food <br/>
                     Meets Hungry Hearts
                 </h1>
@@ -79,11 +126,24 @@ const Home = () => {
                 COOK FOR ME is a Tunisian startup dedicated to making healthy homemade food easily accessible to everyone. 
                 At the same time, it fosters a spirit of sharing and community, connecting people through the love of good food.
             </p>
-            <div style={{width : "600px", marginTop : "40px"}} className="flex items-center justify-between">
-                <Button className=" homeBtnn" style={{color : "black"}} color="gray">App Store</Button>
+            {/* <div style={{width : "600px", marginTop : "40px"}} className="flex items-center justify-between">
+                <Button className=" homeBtnn" style={{color : "black"}} color="gray"><span></span>App Store</Button>
                 <Button className=" homeBtnn" style={{color : "black"}} color="gray">Google Play</Button>
+            </div> */}
+            <div style={{ width: "450px", marginTop: "40px" }} className="flex items-center justify-between">
+                <img 
+                    src="/app-store-black.png" 
+                    alt="app-store" 
+                    className="image-download-home cursor-pointer" 
+                    onClick={() => window.open("https://apps.apple.com/", "_blank")}
+                />
+                <img 
+                    src="/google-play-black.png" 
+                    alt="google-play" 
+                    className="image-download-home cursor-pointer" 
+                    onClick={() => window.open("https://play.google.com/store", "_blank")}
+                />
             </div>
-
         </div>
 
         {/* tick  food*/}
@@ -98,6 +158,7 @@ const Home = () => {
                 ))}
             </div>
         </div>
+
         <div 
             style={{
                 height: '100vh',
@@ -132,6 +193,70 @@ const Home = () => {
                     <span key={index} className="mx-4">{adj}</span>
                 ))}
             </div>
+        </div>
+        <div className="h-screen flex items-center justify-between px-10 relative " >
+            <div className="w-1/2 flex justify-center items-center">
+                <img 
+                className="flex justify-center items-center"
+                src="sushi-ramen.jpg"
+                alt="pizza"
+                style={{
+                    width : "340px", 
+                    marginTop : "150px",
+                    marginLeft : "20px"
+                }}
+                />
+                <img 
+                className="flex justify-center items-center"
+                src="pizza-burger.jpg"
+                alt="pizza"
+                style={{
+                    width : "340px", 
+                    marginLeft : "20px",
+                    marginBottom : "150px",
+                    
+                }}
+                />
+            </div>
+            <div style={{ padding: "40px" }} className="w-1/2 flex flex-wrap justify-center  ">
+                {foods.map((food) => (
+                    <div
+                    key={food.id}
+                    className=" shadow-lg rounded-xl p-5 flex flex-col cursor-pointer transition-transform hover:scale-105"
+                    style={{ width: "300px", margin: "10px" }}
+                    onClick={()=> navigate('/IndexFoods')}
+
+                >
+                    {/* Chef Info */}
+                    <div className="flex items-center mb-3">
+                        <img
+                            src={food.chefImage || "/user-placeholder.png"}
+                            alt={food.chef}
+                            className="w-10 h-10 rounded-full object-cover border-2 border-gray-300"
+                        />
+                        <p className="text-sm font-medium text-gray-700 ml-3">{food.chef}</p>
+                    </div>
+                
+                    
+                
+                    {/* Food Details */}
+                    <div className="mt-3 ">
+                        <p className="text-lg font-semibold text-gray-900">{food.name}</p>
+                        <p className="text-sm text-gray-500">{food.description}</p>
+                        <p className="text-sm text-gray-600">Stock : {food.Stock} available</p>
+                        <p className="mt-1 text-md font-bold text-teal-600">{food.price}</p>
+                    </div>
+                </div>
+                
+                ))}
+            </div>
+
+
+        </div>
+        
+                
+        <div>
+           <Footerr/>
         </div>
         </>
     );

@@ -6,7 +6,7 @@ const Panier = require('../Models/Panier');
 
 exports.SignUp = async(req,res)=>{
     try {
-        const {name, age, email, password} = req.body
+        const { email, password} = req.body
 
         //verifier tous les champs 
         if (!email) {
@@ -14,12 +14,6 @@ exports.SignUp = async(req,res)=>{
         }
         if (!password) {
             return res.status(400).send({errors : [{msg : 'password is required'}]})
-        }
-        if (!name) {
-            return res.status(400).send({errors : [{msg : 'Name is required'}]})
-        }
-        if (!age) {
-            return res.status(400).send({errors : [{msg : 'Age is required'}]})
         }
         
 
@@ -76,7 +70,7 @@ exports.SignIn = async(req,res)=>{
 
         // Handle archived accounts
         if (found.archived) {
-            return res.status(400).send({errors : [{msg : 'Account was archieved please contact the Admin.'}]});
+            return res.status(400).send({errors : [{msg : 'Account was archived please contact the Admin.'}]});
         }
 
         //verify password 
@@ -166,6 +160,31 @@ exports.AllUsers = async(req,res)=>{
     try {
         const users = await User.find()
         res.status(200).send({msg : 'this is all of the users', users})
+    } catch (error) {
+        res.status(500).send({errors : [{msg : 'Could not retrieve all users'}]})
+    }
+}
+
+exports.FetchUsers = async(req,res)=>{
+    try {
+        const archived = req.query.archived === "true"
+        const users = await User.find({ archived })
+
+        const page = parseInt(req.query.page);
+        const pageSize = parseInt(req.query.pageSize);
+
+        // Calculate the start and end indexes for the requested page
+        const startIndex = (page - 1) * pageSize;
+        const endIndex = page * pageSize;
+
+        // Slice the users array based on the indexes
+        const paginatedUsers = users.slice(startIndex, endIndex)
+
+        // Calculate the total number of pages
+        const totalPages = Math.ceil(users.length / pageSize)
+
+        //send paginated users
+        res.status(200).send({msg : 'These are the users', users : paginatedUsers , totalPages})
     } catch (error) {
         res.status(500).send({errors : [{msg : 'Could not retrieve all users'}]})
     }

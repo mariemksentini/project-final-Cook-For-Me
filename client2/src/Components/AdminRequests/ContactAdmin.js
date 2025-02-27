@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { SendRequestToAdmin } from "../Redux/Actions/AdminReqActions";
+
 import { Button } from "flowbite-react";
+import { SendRequestToAdmin } from "../../Redux/Actions/AdminReqActions";
 
 const ContactAdmin = () => {
     const dispatch = useDispatch();
@@ -19,7 +20,8 @@ const ContactAdmin = () => {
     };
 
     return (
-        <form onSubmit={handleSendReq} className="space-y-4 p-6 max-w-md mx-auto bg-white shadow-md rounded-lg">
+        <div className="flex items-center justify-center bg-gray-100" style={{height : "87vh"}}>
+        <form onSubmit={handleSendReq} className="space-y-4 p-6 mx-auto bg-white shadow-md rounded-lg" style={{width: "500px"}}>
             <div>
                 <label className="block text-sm font-medium text-gray-700">Email Address</label>
                 <input
@@ -64,11 +66,23 @@ const ContactAdmin = () => {
                     className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
                 />
             </div>
+            
 
             <Button type="submit" className="w-full">
                 Send Request
             </Button>
+
+            <p className="text-center mt-4">
+                Contact us as a guest?{" "}
+                <span
+                    onClick={() => navigate("/ContactAdminAsGuest")}
+                    className="text-teal-600 cursor-pointer hover:underline"
+                >
+                    Click here
+                </span>
+            </p>
         </form>
+        </div>
     );
 };
 

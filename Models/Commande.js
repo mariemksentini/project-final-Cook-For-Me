@@ -25,18 +25,54 @@ const commandeSchema = new mongoose.Schema({
         type: mongoose.Types.ObjectId,
         ref: 'User'
     },
+    livreur : {
+        type: mongoose.Types.ObjectId,
+        ref: 'User'
+    },
     status : {
         type : String,
-        default :'In progress'
+        default :'In_progress'
     },
     delivered : {
+        type : Boolean,
+        default : false
+    },
+    confirmed : {
         type : Boolean,
         default : false
     },
     archieved : {
         type : Boolean,
         default : false
-    }
+    },
+    rating : {
+        type : Number,
+        default : 0
+    },
+    feedBack : {
+        type : String,
+        default : "None"
+    },
+    addressClient : {
+        latitude : {
+            type : Number,
+            default : 36.777125
+        },
+        longitude : {
+            type : Number,
+            default : 10.177729
+        }
+    },
+    adressChef : {
+        latitude : {
+            type : Number,
+            default : 36.777125
+        },
+        longitude : {
+            type : Number,
+            default : 10.177729
+        }
+    }   
 }, { timestamps: true })
 
 module.exports = mongoose.model('Commande', commandeSchema)
