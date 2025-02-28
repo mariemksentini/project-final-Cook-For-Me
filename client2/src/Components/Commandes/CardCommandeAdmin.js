@@ -12,21 +12,21 @@ const TableRowCommandeAdmin = ({ commande }) => {
     const [delivered, setDelivered] = useState(commande.delivered);
     const [confirmed, setConfirmed] = useState(commande.confirmed);
     const user = useSelector((state)=> state.AuthReducer.user)
-    const handleDelivery = async () => {
-        try {
-            await dispatch(updateCommande(commande._id, { delivered: true }));
-            setDelivered(true);
-        } catch (error) {
-            console.error("Error updating delivery status:", error);
-        }
-    };
+    // const handleDelivery = async () => {
+    //     try {
+    //         await dispatch(updateCommande(commande._id, { delivered: true }));
+    //         setDelivered(true);
+    //     } catch (error) {
+    //         console.error("Error updating delivery status:", error);
+    //     }
+    // };
     const handleConfirm = async () => {
         try {
             await dispatch(updateCommande(commande._id, { confirmed: true }));
             setConfirmed(true);
-            const couxChef = Math.ceil((commande.totalPrice  * 0.97) * 100) /100
-            const couxAdmin = Math.round((commande.totalPrice * 0.01) * 100) / 100;
-            const couxLivreur = Math.round((commande.totalPrice * 0.02) * 100) / 100;
+            const couxChef = Math.ceil((commande.totalPrice  * 0.95) * 100) /100
+            const couxAdmin = Math.round((commande.totalPrice * 0.02) * 100) / 100;
+            const couxLivreur = Math.round((commande.totalPrice * 0.03) * 100 * 5) / 100;
 
             await dispatch(updateFromAdmin(commande.chef._id, {earnings :[...commande.chef.earnings, couxChef]}))
             await dispatch(updateFromAdmin(commande.livreur._id, {earnings :[...commande.livreur.earnings, couxLivreur]}))
@@ -85,11 +85,11 @@ const TableRowCommandeAdmin = ({ commande }) => {
                 </span>
             </Table.Cell>
             <Table.Cell>
-                {commande.status === "Accepted" && !commande.delivered && (
+                {/* {commande.status === "Accepted" && !commande.delivered && (
                     <Button size="xs" color="success" onClick={handleDelivery}>
                         livraison
                     </Button>
-                )}
+                )} */}
                 {commande.delivered  && !commande.confirmed && (
                     <Button size="xs" color="success" onClick={handleConfirm}>
                         Confirm

@@ -108,7 +108,7 @@ const SignIn = () => {
                             <a href="https://tenor.com/search/100-gifs">100 GIFs</a>
                         </div>
                     </div>
-                    <p className="mt-4">Don't have an account? 
+                    <p className="mt-4 text-gray-700">Don't have an account? 
                         <span onClick={() => navigate('/SignUp')} className="text-teal-600 cursor-pointer underline ml-1">Sign up</span>
                     </p>
                 </div>
@@ -129,7 +129,7 @@ const SignIn = () => {
                             className="w-full p-2 border rounded" 
                         />
                         <Button onClick={handleSignIn} className="w-full">Submit</Button>
-                        <Button color="light" className="w-full" onClick={() => navigate('/ContactAdmin')}>
+                        <Button color="light" className="w-full text-gray-700" onClick={() => navigate('/ContactAdmin')}>
                             Contact Admin
                         </Button>
                     </div>

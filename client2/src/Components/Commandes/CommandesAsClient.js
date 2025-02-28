@@ -4,6 +4,7 @@ import { getCommandesWithClientID } from "../../Redux/Actions/CommandeActions";
 import { Table, Spinner } from "flowbite-react";
 import { PackageSearch } from "lucide-react";
 import TableRowCommandeAsClient from "./CardCommandeAsClient";
+import SpinnerDeepSeek from "../SpinnerDeepSeek/SpinnerDeepSeek";
 
 const CommandesAsClient = () => {
     const dispatch = useDispatch();
@@ -24,7 +25,7 @@ const CommandesAsClient = () => {
         <>
             {loading ? (
                 <div className="flex justify-center items-center h-40">
-                    <Spinner size="xl" />
+                    <SpinnerDeepSeek />
                 </div>
             ) : commandesAsClient?.length ? (
                 <div className="overflow-x-auto">

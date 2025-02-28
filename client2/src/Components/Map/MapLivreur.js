@@ -60,17 +60,23 @@ const MapLivreur = () => {
 
       {/* Liste des commandes */}
       <div className="w-1/2 p-4 overflow-y-auto">
-        <h2 className="text-2xl font-semibold mb-4 text-center">Commandes</h2>
+        <h2 className="text-2xl font-semibold mb-4 text-center">Accepted orders</h2>
         {commandesAsLivreur.map((commande) => (
           <Card
             key={commande._id}
-            className="p-4 bg-white shadow-md rounded-lg mb-4 cursor-pointer hover:bg-gray-100"
+            className="p-4 text-gray-200 shadow-md rounded-lg mb-4 cursor-pointer"
+            style={{ backgroundColor: commande.delivered ? "#14b8a6" : "#b91c1c" }}
+
+
             onClick={() => setSelectedCommande(commande)}
           >
+            
             <p><strong>ID:</strong> {commande._id}</p>
             <p><strong>Client:</strong> {commande.client?.name}</p>
             <p><strong>Chef:</strong> {commande.chef?.name}</p>
+            <p><strong>Delivered:</strong> {commande.delivered ? "Oui" : "Non"}</p>
             <p><strong>Total:</strong> {commande.totalPrice}dt</p>
+            <p><strong>Your share:</strong> {Math.round((commande.totalPrice * 0.03) * 100 * 5) / 100}dt</p>
           </Card>
         ))}
       </div>

@@ -170,10 +170,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { deleteOneFood, getOneFood } from "../../Redux/Actions/FoodActions";
 import { getOwnPanier, updatePanier } from "../../Redux/Actions/PanierActions";
-import AnimeSnakeLoading from "../Loading/AnimeSnakeLoading";
 import { Button, Card } from "flowbite-react";
 import { FaPlus, FaMinus, FaTrash, FaEdit, FaShoppingCart } from "react-icons/fa";
 import { Undo2 } from "lucide-react";
+import SpinnerDeepSeek from "../SpinnerDeepSeek/SpinnerDeepSeek";
 
 const FoodDetails = () => {
     const { id } = useParams();
@@ -295,7 +295,7 @@ const FoodDetails = () => {
                     </div>
                 </Card>
             ) : (
-                <AnimeSnakeLoading />
+                <SpinnerDeepSeek />
             )}
         </div>
     );

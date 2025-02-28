@@ -40,9 +40,9 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { GetAllRequests } from "../../Redux/Actions/AdminReqActions";
 import CardRequest from "./CardRequest";
-import AnimeSnakeLoading from "../Loading/AnimeSnakeLoading";
 import { FaClipboardList } from "react-icons/fa";
 import { current } from "../../Redux/Actions/AuthActions";
+import SpinnerDeepSeek from "../SpinnerDeepSeek/SpinnerDeepSeek";
 const ListRequests = () => {
     const dispatch = useDispatch();
     const token = localStorage.getItem("token");
@@ -77,7 +77,7 @@ const ListRequests = () => {
         </div>
     ) : (
         <div className="flex justify-center mt-10">
-            <AnimeSnakeLoading />
+            <SpinnerDeepSeek />
         </div>
     )}
 </div>

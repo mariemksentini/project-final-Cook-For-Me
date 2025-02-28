@@ -4,6 +4,7 @@ import { getOwnPanier } from "../../Redux/Actions/PanierActions";
 import CardChef from "./ParChef/CardChef";
 import { Spinner } from "flowbite-react";
 import { PackageSearch } from "lucide-react"; // Lucide icon
+import SpinnerDeepSeek from "../SpinnerDeepSeek/SpinnerDeepSeek";
 
 const ListProducts = () => {
     const dispatch = useDispatch();
@@ -21,7 +22,7 @@ const ListProducts = () => {
             {loading ? (
                 // 🔄 Spinner when loading
                 <div className="flex justify-center items-center h-40">
-                    <p>Chargement...</p>
+                    <SpinnerDeepSeek/>
                 </div>
             ) : ownPanier?.products?.length ? (
                 <>

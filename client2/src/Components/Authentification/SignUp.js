@@ -19,10 +19,10 @@ const SignUp = () => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [birthdate, setBirthdate] = useState('2025-01-01');
-    const [houseNum, setHouseNum] = useState('00');
+    const [houseNum, setHouseNum] = useState('');
     const [street, setStreet] = useState('');
     const [city, setCity] = useState('');
-    const [zipCode, setZipCode] = useState('0000');
+    const [zipCode, setZipCode] = useState('');
     const [role, setRole] = useState('')
     const [country, setCountry] = useState('Tunisie');
 
@@ -42,7 +42,7 @@ const SignUp = () => {
     }
 
     const handleNext = () => {
-        setStep(step + 1);
+        (email && password && confirmPassword && firstName && lastName ) && setStep(step + 1);
     }
     const handleSubmit = async(e) => {
         console.log(birthdate)
@@ -75,14 +75,13 @@ const SignUp = () => {
                         data-postid="25055361" 
                         data-share-method="host" 
                         data-aspect-ratio="0.965625" 
-                        data-width="100%"
-                    >
-                        <a href="https://tenor.com/view/100-gif-25055361">100 GIF</a> from 
-                        <a href="https://tenor.com/search/100-gifs">100 GIFs</a>
+                        data-width="100%">
+                        {/* <a style={{opacity : "0%"}} href="https://tenor.com/view/100-gif-25055361">100 GIF</a>  
+                        <a style={{opacity : "0%"}} href="https://tenor.com/search/100-gifs">100 GIFs</a> */}
                     </div>
                 </div>
                 
-                    <p className="mt-4 z-20">Have an account? 
+                    <p className="mt-4 z-20 text-gray-700">Have an account? 
                         <span onClick={() => navigate('/SignIn')} className="text-teal-600 cursor-pointer underline ml-1">Sign in</span>
                     </p>
                 </div>
@@ -117,7 +116,8 @@ const SignUp = () => {
                             <div className="flex space-x-4">
                                 <Datepicker 
                                     onChange={(date) => setBirthdate(date instanceof Date ? date.toISOString().split('T')[0] : '')} 
-                                    className="w-1/2 p-2 border rounded" 
+                                    className="w-1/2 rounded border-black " 
+                                    style={{height : "41.6px"}}
                                 />
                                 <select
                                     onChange={(e) => setRole(e.target.value)}
@@ -133,12 +133,12 @@ const SignUp = () => {
                             </div>
 
                             <div className="flex space-x-4 ">
-                                <input type="text" placeholder="House Number" value={houseNum} onChange={(e) => setHouseNum(e.target.value)}  className="w-1/2 p-2 border rounded" />
-                                <input type="text" placeholder="Street Name" value={street} onChange={(e) => setStreet(e.target.value)}  className="w-1/2 p-2 border rounded" />
+                                <input type="text" placeholder="House Number"  onChange={(e) => setHouseNum(e.target.value)}  className="w-1/2 p-2 border rounded" />
+                                <input type="text" placeholder="Street Name"  onChange={(e) => setStreet(e.target.value)}  className="w-1/2 p-2 border rounded" />
                             </div>
                             <div className="flex space-x-4">
-                                <input type="text" placeholder="City" value={city} onChange={(e) => setCity(e.target.value)} style={{ width : "124px"}} className="w-1/3 p-2 border rounded" />
-                                <input type="text" placeholder="Postal Code" value={zipCode} onChange={(e) => setZipCode(e.target.value)} style={{ width : "124px"}} className="w-1/3 p-2 border rounded" />
+                                <input type="text" placeholder="City" onChange={(e) => setCity(e.target.value)} style={{ width : "124px"}} className="w-1/3 p-2 border rounded" />
+                                <input type="text" placeholder="Postal Code"  onChange={(e) => setZipCode(e.target.value)} style={{ width : "124px"}} className="w-1/3 p-2 border rounded" />
                                 <select
                                     onChange={(e) => setCountry(e.target.value)}
                                     name="country"
@@ -221,7 +221,7 @@ const SignUp = () => {
                             }
                             
                             <div className="flex justify-between mt-4">
-                                <Button onClick={() => setStep(1)} color='gray' className="w-1/2 mr-2">Back</Button>
+                                <Button onClick={() => setStep(1)} color='gray' className="w-1/2 mr-2 text-gray-700">Back</Button>
                                 <Button 
                                     onClick={() => handleSubmit()} 
                                     disabled={!(confPolicy && confTerms)} 

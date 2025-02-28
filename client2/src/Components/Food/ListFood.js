@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchFoods } from "../../Redux/Actions/FoodActions";
 import CardFood from "./CardFood";
-import AnimeSnakeLoading from "../Loading/AnimeSnakeLoading";
 import { current } from "../../Redux/Actions/AuthActions";
 import { Button, Pagination } from "flowbite-react";
 import { FaArchive, FaUtensils } from "react-icons/fa";

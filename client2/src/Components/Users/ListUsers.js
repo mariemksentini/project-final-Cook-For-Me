@@ -6,6 +6,7 @@ import { Users, UserCheck, Loader2 } from "lucide-react";
 import { Button, Pagination } from "flowbite-react";
 import { FaArchive } from "react-icons/fa";
 import AnimeSnakeLoading from "../Loading/AnimeSnakeLoading";
+import SpinnerDeepSeek from "../SpinnerDeepSeek/SpinnerDeepSeek";
 
 const ListUsers = () => {
   const dispatch = useDispatch();
@@ -104,7 +105,7 @@ const ListUsers = () => {
                 </>
             ) : (
                 <div className="flex justify-center items-center min-h-[50vh]">
-                    <AnimeSnakeLoading />
+                    <SpinnerDeepSeek />
                 </div>
             )}
     </div>

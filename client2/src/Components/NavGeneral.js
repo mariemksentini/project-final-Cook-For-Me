@@ -148,13 +148,17 @@ const NavGeneral = () => {
                         <Dropdown.Header >
                             <span className="block truncate text-sm font-medium">{user.email}</span>
                         </Dropdown.Header >
-                        <Dropdown.Item >
+                        <Dropdown.Item as={Link} to="/Profil">
                             <Navbar.Link as={Link} to="/Profil">Profil</Navbar.Link>
                         </Dropdown.Item>
-                        <Dropdown.Item >Settings</Dropdown.Item>
-                        <Dropdown.Item as={Link} to={user.role === 'admin' ? '/DashboardAdmin' : user.role === 'user' ? '/DashboardUser' : '/'} >
-                            <Navbar.Link as={Link} to={user.role === 'admin' ? '/DashboardAdmin' : user.role === 'user' ? '/DashboardUser' : '/'} >Dashboard</Navbar.Link>
-                        
+                        <Dropdown.Item as={Link} to="/EditProfil">
+                            <Navbar.Link as={Link} to="/EditProfil">Settings</Navbar.Link>
+                        </Dropdown.Item>
+                        <Dropdown.Item as={Link} to={user.role === 'admin' ? '/DashboardAdmin' : user.role === 'user' ? '/DashboardUser' : '/DashboardLivreur'} >
+                            <Navbar.Link as={Link} to={user.role === 'admin' ? '/DashboardAdmin' : user.role === 'user' ? '/DashboardUser' : '/DashboardLivreur'} >Dashboard</Navbar.Link>
+                        </Dropdown.Item>
+                        <Dropdown.Item as={Link} to="/ContactAdmin">
+                            <Navbar.Link as={Link} to="/ContactAdmin">Contact us</Navbar.Link>
                         </Dropdown.Item>
                         <Dropdown.Divider />
                         <Dropdown.Item  onClick={handleLogOut} className='text-red-600'>Sign out</Dropdown.Item>

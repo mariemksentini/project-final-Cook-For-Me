@@ -72,7 +72,7 @@ const ContactAdmin = () => {
                 Send Request
             </Button>
 
-            <p className="text-center mt-4">
+            <p className="text-center mt-4 text-orange-950">
                 Contact us as a guest?{" "}
                 <span
                     onClick={() => navigate("/ContactAdminAsGuest")}

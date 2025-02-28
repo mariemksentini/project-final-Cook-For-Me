@@ -1,38 +1,49 @@
-const Footerr = () => {
-  const links = [
-    "Company", "About Us", "Team", "Products", 
-    "Blog", "Pricing", "Contact", "Careers"
-  ];
+import { Link } from "react-router-dom";
 
+const Footerr = () => {
+  const token = localStorage.getItem('token')
+ 
   
   const currentYear = new Date().getFullYear();
+  
 
   return (
     <footer className="px-8 py-16 text-gray-700">
       <div className="container mx-auto flex flex-col md:flex-row items-center justify-between">
         {/* Logo Section */}
         <div className="mb-6 md:mb-0 md:w-1/3">
-          <img src="/footer-logo-cookforme.png" alt="Logo" className="w-64" />
+          <img src="/footer-logo-cookforme.png" alt="Logo" style={{width : "530px"}} />
         </div>
         
         {/* Navigation Links */}
-        <div className="grid grid-cols-4 gap-6 w-2/3 text-center md:text-left">
-          {links.map((link, index) => (
-            <a
-              key={index}
-              href="#"
+        {/* <div className="grid grid-cols-4 gap-6 w-2/3 text-center md:text-left">
+          
+          <a
+              as={Link} to={'/'}
               style={{width : "100px" , height : "50px"}}
               className="font-medium text-gray-600 justify-start hover:text-gray-900 transition-colors"
             >
-              {link}
+              Company
             </a>
-          ))}
+            
+        </div> */}
+        
+        <div className="grid grid-cols-4 gap-6 w-2/3 text-center md:text-left">
+          <Link to="/" style={{width : "100px" , height : "50px", textAlign : "left"}} className="font-medium text-gray-600 hover:text-gray-900">Company</Link>
+          <Link style={{width : "100px" , height : "50px", textAlign : "left"}} to="/" className="font-medium text-gray-600 hover:text-gray-900">About Us</Link>
+          <Link style={{width : "100px" , height : "50px", textAlign : "left"}} to={token ? "/GetAllUsers" : "/map"} className="font-medium text-gray-600 hover:text-gray-900">Users</Link>
+          <Link style={{width : "100px" , height : "50px", textAlign : "left"}} to="/IndexFoods" className="font-medium text-gray-600 hover:text-gray-900">Products</Link>
+          <Link style={{width : "100px" , height : "50px", textAlign : "left"}} to="/" className="font-medium text-gray-600 hover:text-gray-900">Blog</Link>
+          <Link style={{width : "100px" , height : "50px", textAlign : "left"}} to="/" className="font-medium text-gray-600 hover:text-gray-900">Pricing</Link>
+          <Link style={{width : "100px" , height : "50px", textAlign : "left"}} to="/ContactAdminAsGuest" className="font-medium text-gray-600 hover:text-gray-900">Contact</Link>
+          <Link style={{width : "100px" , height : "50px", textAlign : "left"}} to="/" className="font-medium text-gray-600 hover:text-gray-900">Careers</Link>
         </div>
+
       </div>
       
       {/* Copyright */}
       <p className="text-sm text-gray-500 mt-8 text-center" style={{marginBottom : "20px"}}>
-        &copy; {currentYear} Your Company. All rights reserved.
+        &copy; {currentYear} Cook For Me. All rights reserved.
       </p>
     </footer>
   );

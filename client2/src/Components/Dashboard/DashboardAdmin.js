@@ -75,7 +75,7 @@ const DashboardAdmin = () => {
             <DollarSign className="mr-2 h-5 w-5" /> Total Earnings
           </h2>
           <p className="text-2xl font-bold text-gray-800">
-            ${totalEarnings.toFixed(2)}
+            {totalEarnings.toFixed(2)} DT
           </p>
         </div>
       </Card>

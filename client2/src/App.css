@@ -16,6 +16,11 @@
     background-color: aliceblue;
 }
 
+.slideOutUp{
+    opacity: 0;
+    z-index: -10 !important;
+}
+
 .gif-container {
     width: 150px;  /* Set desired width */
     height: 150px; /* Set desired height */

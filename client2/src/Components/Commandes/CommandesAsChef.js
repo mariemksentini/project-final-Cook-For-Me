@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCommandesWithChefID } from "../../Redux/Actions/CommandeActions";
-import { Table, Spinner } from "flowbite-react";
+import { Table } from "flowbite-react";
 import { UtensilsCrossed } from "lucide-react";
 import TableRowCommandeAsChef from "./CardCommandeAsChef";
 import { current } from "../../Redux/Actions/AuthActions";
+import SpinnerDeepSeek from "../SpinnerDeepSeek/SpinnerDeepSeek";
 
 const CommandesAsChef = () => {
     const dispatch = useDispatch();
@@ -22,7 +23,8 @@ const CommandesAsChef = () => {
         <>
             {loading ? (
                 <div className="flex justify-center items-center h-40">
-                    <Spinner size="xl" />
+                    <SpinnerDeepSeek/>
+
                 </div>
             ) : commandesAsChef?.length ? (
                 <div className="overflow-x-auto">

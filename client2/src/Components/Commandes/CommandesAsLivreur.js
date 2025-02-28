@@ -5,6 +5,7 @@ import { current } from "../../Redux/Actions/AuthActions";
 import { Table, Spinner } from "flowbite-react";
 import { PackageX } from "lucide-react"; // Lucide icon
 import TableRowCommandeLivreur from "./CardCommandeLivreur";
+import SpinnerDeepSeek from "../SpinnerDeepSeek/SpinnerDeepSeek";
 
 const CommandesAsLivreur = () => {
     const dispatch = useDispatch();
@@ -25,7 +26,7 @@ const CommandesAsLivreur = () => {
             {loading ? (
                 // 🔄 Spinner when loading
                 <div className="flex justify-center items-center h-40">
-                    <Spinner size="xl" />
+                    <SpinnerDeepSeek />
                 </div>
             ) : allComm.length !== 0 ? (
                 user.role === "livreur" && (

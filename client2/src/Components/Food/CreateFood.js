@@ -20,8 +20,8 @@ const CreateFood = () => {
     const [type, setType] = useState("Plat");
     const [image, setImage] = useState("/food.jpg");
     const [biography, setBiography] = useState("");
-    const [quantity, setQuantity] = useState("");
-    const [price, setPrice] = useState("");
+    const [quantity, setQuantity] = useState(0);
+    const [price, setPrice] = useState(0);
 
     const [base64, setBase64] = useState("");
 
@@ -113,7 +113,7 @@ const CreateFood = () => {
                         type="number" 
                         value={price} 
                         onChange={(e) => setPrice(e.target.value)} 
-                        placeholder="Price" 
+                        placeholder="Price in DT" 
                         className="w-full focus:outline-none" 
                     />
                 </div>

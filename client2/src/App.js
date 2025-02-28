@@ -35,6 +35,7 @@ import FoodOwnerID from './Components/Food/FoodOwnerID';
 import MapLivreur from './Components/Map/MapLivreur';
 import DashboardAdmin from './Components/Dashboard/DashboardAdmin';
 import DashboardUser from './Components/Dashboard/DashboardUser';
+import DashboardLivreur from './Components/Dashboard/DashboardLivreur';
 // import PaginationComponent from './Components/Food/PaginationComp';
 
 
@@ -45,7 +46,7 @@ function AppContent (){
 
   return (
     <div style={{ marginTop: isHomePage ? "0" : "110px" }}>
-      
+      <ErrorsCom/>
       <Routes>
         <Route path='/' element={<Home/>}/> {/* GUEST ADMIN USER LIVREUR */}
         <Route path='/SignUp' element={<SignUp/>}/> {/* GUEST  */}
@@ -85,10 +86,11 @@ function AppContent (){
         <Route path='/ClickableMap' element={<ClickableMap/>}/>
         <Route path='/MapLivreur' element={<PrivateRoute roles={["livreur"]}><MapLivreur/></PrivateRoute>} />
 
-        <Route path='/DashboardAdmin' element={<DashboardAdmin/>} />
-        <Route path='/DashboardUser' element={<DashboardUser/>} />
+        <Route path='/DashboardAdmin' element={<PrivateRoute roles={["admin"]}><DashboardAdmin/></PrivateRoute>} />
+        <Route path='/DashboardUser' element={<PrivateRoute roles={["user"]}><DashboardUser/></PrivateRoute>} />
+        <Route path='/DashboardLivreur' element={<PrivateRoute roles={["livreur"]}><DashboardLivreur/></PrivateRoute>} />
       </Routes>
-      <ErrorsCom/>
+      
     </div>
   )
 }
