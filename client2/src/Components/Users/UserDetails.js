@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { current, deleteOneUser, getOneUser, updateFromAdmin } from '../../Redux/Actions/AuthActions';
 import { MoreVertical, Star, Undo2 } from 'lucide-react';
-import AnimeSnakeLoading from '../Loading/AnimeSnakeLoading';
+import SpinnerChatGpt from '../SpinnerDeepSeek/SpinnerChatGpt';
 
 const UserDetails = () => {
   const { id } = useParams();
@@ -42,7 +42,7 @@ const UserDetails = () => {
     ? (validRatings.reduce((acc, val) => acc + val, 0) / validRatings.length).toFixed(1)
     : "No Ratings";
 
-  if (loading) return <AnimeSnakeLoading />;
+  if (loading) return <SpinnerChatGpt />;
 
   return (
     <div className="max-w-3xl mx-auto mt-12 p-6 bg-white shadow-lg rounded-lg relative">
@@ -74,8 +74,8 @@ const UserDetails = () => {
         </button>
       </div>
 
-      <div className="flex items-center space-x-6 p-4 border-b border-gray-300">
-        <img src={wantedUser.image} alt="Profile" className="w-32 h-32 rounded-lg border-4 border-teal-500 object-cover" />
+      <div className="flex items-center justify-center space-x-6 p-4 border-b border-gray-300">
+        <img src={wantedUser.image} alt="Profile" className=" h-32 rounded-lg border-4 border-teal-500 object-cover" />
       </div>
 
       <div className="mt-4 bg-gray-100 p-4 rounded-lg">

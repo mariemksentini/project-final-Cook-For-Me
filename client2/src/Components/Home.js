@@ -174,7 +174,7 @@ const Home = () => {
             </div>
         </div> */}
 
-        <div style={{ height: "550px", fontFamily: "sans-serif" }} className="w-full flex flex-col items-center justify-center py-16 bg-white text-center px-6">
+        <div style={{ height: "550px", fontFamily: "sans-serif" }} className="w-full flex flex-col items-center justify-center py-16  text-center px-6">
             <h2 style={{fontSize : "48px"}} className="text-5xl font-extrabold text-teal-900 mb-4 tracking-tight">COOK FOR ME</h2>
             
             <p className="text-lg max-w-xl mx-auto text-gray-600 italic leading-relaxed">

@@ -44,7 +44,7 @@ const ListProducts = () => {
                 </>
             ) : (
                 // 📦 No products UI
-                <div className="flex flex-col items-center justify-center h-40 text-gray-600">
+                <div className="flex flex-col items-center justify-center h-screen text-gray-600">
                     <PackageSearch size={50} className="mb-2" />
                     <p>Votre panier est vide.</p>
                 </div>

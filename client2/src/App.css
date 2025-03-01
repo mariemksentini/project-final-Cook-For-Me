@@ -62,7 +62,8 @@
 }
 
 body {
-    background-color: rgb(249, 249, 249);
+    background-color: rgb(253, 253, 253);
+    background-image: url("../public/45-degree-fabric-light.png");
 }
 
 .ticker-container {

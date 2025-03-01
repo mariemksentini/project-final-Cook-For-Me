@@ -20,7 +20,7 @@ const ContactAdmin = () => {
     };
 
     return (
-        <div className="flex items-center justify-center bg-gray-100" style={{height : "87vh"}}>
+        <div className="flex items-center justify-center " style={{height : "87vh"}}>
         <form onSubmit={handleSendReq} className="space-y-4 p-6 mx-auto bg-white shadow-md rounded-lg" style={{width: "500px"}}>
             <div>
                 <label className="block text-sm font-medium text-gray-700">Email Address</label>

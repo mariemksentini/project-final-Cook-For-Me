@@ -2,10 +2,9 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { current, fetchUsers, getAllUsers } from "../../Redux/Actions/AuthActions";
 import CardUser from "./CardUser";
-import { Users, UserCheck, Loader2 } from "lucide-react";
+import { Users, UserCheck } from "lucide-react";
 import { Button, Pagination } from "flowbite-react";
 import { FaArchive } from "react-icons/fa";
-import AnimeSnakeLoading from "../Loading/AnimeSnakeLoading";
 import SpinnerDeepSeek from "../SpinnerDeepSeek/SpinnerDeepSeek";
 
 const ListUsers = () => {

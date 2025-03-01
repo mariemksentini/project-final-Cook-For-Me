@@ -12,7 +12,7 @@ const Footerr = () => {
       <div className="container mx-auto flex flex-col md:flex-row items-center justify-between">
         {/* Logo Section */}
         <div className="mb-6 md:mb-0 md:w-1/3">
-          <img src="/footer-logo-cookforme.png" alt="Logo" style={{width : "530px"}} />
+          <img src="/footer-logo-cookforme-removebg.png" alt="Logo" style={{width : "530px"}} />
         </div>
         
         {/* Navigation Links */}

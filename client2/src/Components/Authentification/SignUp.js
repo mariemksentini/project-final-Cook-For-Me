@@ -66,7 +66,7 @@ const SignUp = () => {
     
 
     return (
-        <div className="flex items-center justify-center bg-gray-100" style={{height : "87vh"}}>
+        <div className="flex items-center justify-center " style={{height : "87vh"}}>
             <div className="w-full max-w-4xl bg-white p-8 rounded-lg shadow-lg flex">
                 <div className="w-1/2 flex flex-col items-center justify-center  p-6 rounded-l-lg">
                 <div className="gif-container">
