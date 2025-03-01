@@ -47,7 +47,7 @@ const ContactAdminAsGuest = () => {
                 Send Request
             </Button>
 
-            <p className="text-center mt-4">
+            <p className="text-center mt-4 text-gray-700">
                 Already have an account?{" "}
                 <span
                     onClick={() => navigate("/ContactAdmin")}
