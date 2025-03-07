@@ -150,7 +150,7 @@ const CardChef = ({ chef, products, chefEmail, ownPanier }) => {
               <Modal.Footer>
                 <Button onClick={(e) => handleCommander(e)}>Confirm order</Button>
                 <Button color="gray" onClick={() => setOpenModal(false)}>Cancel</Button>
-              </Modal.Footer>
+            </Modal.Footer>
             </Modal>
         </div>
     );

@@ -5,6 +5,7 @@ import FoodReducer from './FoodReducer';
 import PanierReducer from './PanierReducer';
 import CommandeReducer from './CommandeReducer';
 import AdminReqReducer from './AdminReqReducer';
-const rootReducer = combineReducers({AuthReducer, ErrorsReducer, PanierReducer, FoodReducer, CommandeReducer, AdminReqReducer})
+import rendezVousReducer from './RendezVousReducer';
+const rootReducer = combineReducers({AuthReducer, ErrorsReducer, PanierReducer, FoodReducer, CommandeReducer, AdminReqReducer, rendezVousReducer})
 
 export default rootReducer

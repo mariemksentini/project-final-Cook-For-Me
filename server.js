@@ -6,6 +6,7 @@ const panierRouter = require('./Routes/Panier')
 const commandeRouter = require('./Routes/Commande')
 const cors = require('cors');
 const adminReqRouter = require('./Routes/AdminReq')
+const rendezVousRouter = require('./Routes/RendezVous')
 
 const app = express()
 
@@ -27,6 +28,8 @@ app.use('/api/panier', panierRouter)
 app.use('/api/commande', commandeRouter)
 
 app.use('/api/adminReq', adminReqRouter)
+
+app.use('/api/rendezVous', rendezVousRouter)
 
 app.listen(process.env.port,
     console.log(`Server is running on port ${process.env.port}`)

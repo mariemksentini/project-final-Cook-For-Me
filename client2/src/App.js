@@ -36,7 +36,14 @@ import MapLivreur from './Components/Map/MapLivreur';
 import DashboardAdmin from './Components/Dashboard/DashboardAdmin';
 import DashboardUser from './Components/Dashboard/DashboardUser';
 import DashboardLivreur from './Components/Dashboard/DashboardLivreur';
+import CalendarComponent from './Components/RendezVous/Calendar';
 // import PaginationComponent from './Components/Food/PaginationComp';
+import { registerLicense } from '@syncfusion/ej2-base';
+import AddRendezVous from './Components/RendezVous/AddRendezVous';
+import GeneralCalendar from './Components/RendezVous/GeneralCalendar';
+import RendezVousDetails from './Components/RendezVous/RendezVousDetails';
+
+registerLicense('Ngo9BigBOggjHTQxAR8/V1NMaF1cXmhKYVJ1WmFZfVtgdVdMYlpbQHJPIiBoS35Rc0VgWXlfcnZTQmRUUkd0');
 
 
 function AppContent (){
@@ -51,12 +58,12 @@ function AppContent (){
         <Route path='/' element={<Home/>}/> {/* GUEST ADMIN USER LIVREUR */}
         <Route path='/SignUp' element={<SignUp/>}/> {/* GUEST  */}
         <Route path='/SignIn' element={<SignIn/>}/> {/* GUEST  */}
-        <Route path='/EditProfil' element={<PrivateRoute roles={["admin", "user", "livreur"]}><EditProfil/></PrivateRoute> }/> {/* ADMIN USER LIVREUR */}
-        <Route path='/Profil' element={<PrivateRoute roles={["admin", "user", "livreur"]}><Profil/></PrivateRoute> }/> {/*  ADMIN USER LIVREUR */}
-        <Route path='/DeleteUser' element={<PrivateRoute roles={[ "user", "livreur"]}><DeleteUser/></PrivateRoute>}/> {/* USER LIVREUR */}
+        <Route path='/EditProfil' element={<PrivateRoute roles={["admin", "user", "livreur", "privateChef"]}><EditProfil/></PrivateRoute> }/> {/* ADMIN USER LIVREUR */}
+        <Route path='/Profil' element={<PrivateRoute roles={["admin", "user", "livreur", "privateChef"]}><Profil/></PrivateRoute> }/> {/*  ADMIN USER LIVREUR */}
+        <Route path='/DeleteUser' element={<PrivateRoute roles={[ "user", "livreur", "privateChef"]}><DeleteUser/></PrivateRoute>}/> {/* USER LIVREUR */}
 
-        <Route path='/GetAllUsers' element={<PrivateRoute roles={["admin", "user", "livreur"]}><ListUsers/></PrivateRoute>}/> {/*  ADMIN USER LIVREUR */}
-        <Route path='/UserDetails/:id' element={<PrivateRoute roles={["admin", "user", "livreur"]}><UserDetails/></PrivateRoute>}/> {/* ADMIN USER (read only + no chart) LIVREUR (read only + no chart)*/}
+        <Route path='/GetAllUsers' element={<PrivateRoute roles={["admin", "user", "livreur", "privateChef"]}><ListUsers/></PrivateRoute>}/> {/*  ADMIN USER LIVREUR */}
+        <Route path='/UserDetails/:id' element={<PrivateRoute roles={["admin", "user", "livreur", "privateChef"]}><UserDetails/></PrivateRoute>}/> {/* ADMIN USER (read only + no chart) LIVREUR (read only + no chart)*/}
 
         <Route path='/IndexFoods' element={<IndexFoods/>}/> {/* GUEST ADMIN USER LIVREUR */}
         <Route path='/FoodDetails/:id' element={<FoodDetails/>}/> {/* GUEST ADMIN USER LIVREUR */}
@@ -89,6 +96,11 @@ function AppContent (){
         <Route path='/DashboardAdmin' element={<PrivateRoute roles={["admin"]}><DashboardAdmin/></PrivateRoute>} />
         <Route path='/DashboardUser' element={<PrivateRoute roles={["user"]}><DashboardUser/></PrivateRoute>} />
         <Route path='/DashboardLivreur' element={<PrivateRoute roles={["livreur"]}><DashboardLivreur/></PrivateRoute>} />
+
+        <Route path='/Calendar' element={<CalendarComponent/>}/>
+        <Route path='/AddRendezVous' element={<AddRendezVous/>}/>
+        <Route path='/GeneralCalendar' element={<GeneralCalendar/>}/>
+        <Route path='/RendezVousDetails/:id' element={<RendezVousDetails/>}/>
       </Routes>
       
     </div>

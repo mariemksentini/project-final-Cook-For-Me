@@ -128,6 +128,7 @@ const SignUp = () => {
                                 >
                                     <option value="user">User</option>
                                     <option value="livreur">Livreur</option>
+                                    <option value="privateChef">Private Chef</option>
                                 </select>
 
                             </div>
@@ -152,6 +153,7 @@ const SignUp = () => {
                                     <option value="Germany">Germany</option>
                                 </select>
                             </div>
+                            {/* check buttons taa agree */}
                             <p className="text-sm text-gray-600">By signing up, you agree to our 
                                 <span className="text-teal-600 cursor-pointer underline ml-1" onClick={() => setOpenModalOne(true)}>Privacy Policy</span> and 
                                 <span className="text-teal-600 cursor-pointer underline ml-1" onClick={() => setOpenModalTwo(true)}>Terms of Service</span>.
