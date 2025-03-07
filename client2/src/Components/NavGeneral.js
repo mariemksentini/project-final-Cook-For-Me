@@ -125,6 +125,7 @@ const NavGeneral = () => {
                         </Navbar.Link>
                     </>
                     :
+                    user.role === 'livreur' ?
                     <>
                         <Navbar.Link as={Link} to="/CommandesAsLivreur" className={isHomePage && !isScrolled ? "text-white" : "text-teal-900"}>
                             Deliver Orders
@@ -132,6 +133,13 @@ const NavGeneral = () => {
                         <Navbar.Link as={Link} to="/MapLivreur" className={isHomePage && !isScrolled ? "text-white" : "text-teal-900"}>
                             <Map/>
                         </Navbar.Link>
+                    </>
+                    :
+                    <>
+                        <Navbar.Link as={Link} to="/GeneralCalendar" className={isHomePage && !isScrolled ? "text-white" : "text-teal-900"}>
+                            Calendar
+                        </Navbar.Link>
+                        
                     </>
                 )
                 }

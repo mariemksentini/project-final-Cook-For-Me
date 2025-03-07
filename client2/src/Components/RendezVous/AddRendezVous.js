@@ -31,9 +31,10 @@ const AddRendezVous = () => {
     const [latitude, setLatitude] = useState(user?.addressMap?.latitude || 36.777125);
     const [link, setLink] = useState("www.googlemeet.com");
 
-    const handleAddRendezVous = (e) => {
+    const handleAddRendezVous = async(e) => {
         e.preventDefault();
-        dispatch(addRendezVous({ startTime, endTime, type, description, price, address: { latitude, longitude }, link }));
+        await dispatch(addRendezVous({ startTime, endTime, type, description, price, address: { latitude, longitude }, link }));
+        navigate('/GeneralCalendar')
     };
 
     const icon = new L.Icon({

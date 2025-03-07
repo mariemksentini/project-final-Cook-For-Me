@@ -42,6 +42,7 @@ import { registerLicense } from '@syncfusion/ej2-base';
 import AddRendezVous from './Components/RendezVous/AddRendezVous';
 import GeneralCalendar from './Components/RendezVous/GeneralCalendar';
 import RendezVousDetails from './Components/RendezVous/RendezVousDetails';
+import ChefRendezVous from './Components/RendezVous/ChefRendezVous';
 
 registerLicense('Ngo9BigBOggjHTQxAR8/V1NMaF1cXmhKYVJ1WmFZfVtgdVdMYlpbQHJPIiBoS35Rc0VgWXlfcnZTQmRUUkd0');
 
@@ -98,9 +99,10 @@ function AppContent (){
         <Route path='/DashboardLivreur' element={<PrivateRoute roles={["livreur"]}><DashboardLivreur/></PrivateRoute>} />
 
         <Route path='/Calendar' element={<CalendarComponent/>}/>
-        <Route path='/AddRendezVous' element={<AddRendezVous/>}/>
+        <Route path='/AddRendezVous' element={<PrivateRoute roles={["privateChef"]} ><AddRendezVous/></PrivateRoute>}/>
         <Route path='/GeneralCalendar' element={<GeneralCalendar/>}/>
-        <Route path='/RendezVousDetails/:id' element={<RendezVousDetails/>}/>
+        <Route path='/RendezVousDetails/:id' element={<PrivateRoute roles={["privateChef", "admin", "user"]}><RendezVousDetails/></PrivateRoute>}/>
+        <Route path='/ChefRendezVous/:id' element={<PrivateRoute roles={["privateChef", "admin", "user"]}><ChefRendezVous/></PrivateRoute>}/>
       </Routes>
       
     </div>

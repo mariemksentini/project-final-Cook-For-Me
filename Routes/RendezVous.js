@@ -94,11 +94,11 @@ rendezVousRouter.post('/addRendezVous', IsAuth, async (req, res) => {
     }
 });
 
-rendezVousRouter.put('updateRendezVous/:id', async(req,res)=>{
+rendezVousRouter.put('/updateRendezVous/:id', async(req,res)=>{
     try {
         const {id} = req.params
         await RendezVous.findByIdAndUpdate(id, req.body)
-        const updated = RendezVous.findById(id)
+        const updated = await RendezVous.findById(id)
         res.status(200).send({msg : 'updated rendezvous', updated})
     } catch (error) {
         console.error(error);
@@ -107,7 +107,7 @@ rendezVousRouter.put('updateRendezVous/:id', async(req,res)=>{
 })
 
 
-rendezVousRouter.delete('deleteRendezVous/:id', async(req,res)=>{
+rendezVousRouter.delete('/deleteRendezVous/:id', async(req,res)=>{
     try {
         const {id} = req.params
         await RendezVous.findByIdAndDelete(id)
